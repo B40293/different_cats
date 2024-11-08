@@ -3,6 +3,8 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
+from scipy.special import label
+
 
 def load_image(url):
     try:
@@ -24,13 +26,28 @@ def set_image():
         label.image = img
 
 
+def exit():
+    window.destroy()
+
+
 window = Tk()
 
 window.title("Cats!")
 window.geometry('600x520')
 
-update_button=Button(text="Обновить",command=set_image)
-update_button.pack()
+# update_button=Button(text="Обновить",command=set_image)
+# update_button.pack()
+
+menu_bar = Menu(window)
+window.config(menu=menu_bar)
+
+file_menu = Menu(menu_bar, tearoff=0)
+menu_bar.add_cascade(label="Файл", menu=file_menu)
+file_menu.add_command(label="Загрузить фото", command=set_image)
+file_menu.add_separator()
+file_menu.add_command(label="Выход", command=exit)
+
+
 
 label = Label()
 label.pack()
